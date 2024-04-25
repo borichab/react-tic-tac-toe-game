@@ -46,10 +46,8 @@ export default function Game() {
 }
 
 function Board({ xIsNext, squares, onPlay }) {
-
-  const { winner, winningLine } = calculateWinner(squares);
   function handleClick(i) {
-    if (squares[i] || winner) {
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
     const nextSquares = squares.slice();
@@ -64,42 +62,42 @@ function Board({ xIsNext, squares, onPlay }) {
     return true;
   }
 
-
+  const winner = calculateWinner(squares);
   let status;
   if (winner) {
     status = "Winner: " + winner;
   } else if (arrayFilled()) {
-    status = "Draw!";
+    status = "Draw";
   } else {
     status = "Current Turn: " + (xIsNext ? "X" : "O");
   }
 
-
   return (
     <>
-      <div className={`status ${status === "Draw!" ? 'status-draw' : status.includes('Winner:') ? 'status-win' : ''}`}>{status}</div>
+      <div className="status"><h2>{status}</h2></div>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} borderHide="br-top-none br-left-none" isWinningSquare={winningLine && winningLine.includes(0)}/>
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} borderHide="br-top-none" isWinningSquare={winningLine && winningLine.includes(1)}/>
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} borderHide="br-top-none br-right-none" isWinningSquare={winningLine && winningLine.includes(2)}/>
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} borderHide="br-top-none br-left-none"/>
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} borderHide="br-top-none"/>
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} borderHide="br-top-none br-right-none"/>
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} borderHide="br-left-none" isWinningSquare={winningLine && winningLine.includes(3)}/>
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} isWinningSquare={winningLine && winningLine.includes(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} borderHide="br-right-none" isWinningSquare={winningLine && winningLine.includes(5)}/>
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} borderHide="br-left-none"/>
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} borderHide="br-right-none"/>
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} borderHide="br-bottom-none br-left-none" isWinningSquare={winningLine && winningLine.includes(6)}/>
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} borderHide="br-bottom-none" isWinningSquare={winningLine && winningLine.includes(7)}/>
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} borderHide="br-bottom-none br-right-none" isWinningSquare={winningLine && winningLine.includes(8)}/>
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} borderHide="br-bottom-none br-left-none"/>
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} borderHide="br-bottom-none"/>
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} borderHide="br-bottom-none br-right-none"/>
       </div>
     </>
   );
 }
 
-function Square({ value, onSquareClick, borderHide, isWinningSquare }) {
+function Square({ value, onSquareClick, borderHide }) {
+  const squareclass = "square"
   return (
-    <button className={`square ${borderHide} ${isWinningSquare ? 'winning-square' : ''}`} onClick={onSquareClick}>
+    <button className={`${squareclass} ${borderHide}`} onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -119,8 +117,8 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {winner: squares[a], winningLine: lines[i]};
+      return {winner: squares[a], line: lines[i]};
     }
   }
-  return { winner: null, winningLine: null };
+  return null;
 }

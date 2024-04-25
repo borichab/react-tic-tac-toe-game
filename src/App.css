@@ -1,54 +1,122 @@
+:root {
+  --square-size: 100px;
+  --board-width: 350px;
+  --status-width: 350px;
+  --status-geight: 50px;
+  --square-font-size: 5rem;
+  --status-font-size: 2rem;
+}
+
 body {
   text-align: center;
   background-color: black;
   padding-top: 50px;
 }
 
-.status{
-  background-color: aliceblue;
-  width: 200px;
-  height: 25px;
+.status {
+ background-color: white;
+  width: 100%;
+  height: var(--status-height);
   margin: 0 auto;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: var(--status-font-size);
+  font-weight: 800;
+}
+
+.status-draw {
+  color: #00DDFF;
+}
+
+.status-win {
+  color: #F75990;
+}
+
+.game-board {
+  width: var(--board-width);
+  margin: 0 auto;
 }
 
 .board-row{
-  width: 200px;
-  margin: 0 auto;
-  background-color: aliceblue;
+  background-color: white;
 }
 
 .board-row:last-child {
   padding-bottom: 25px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-.square{
+.square {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 2rem;
+  font-size: var(--square-font-size);
   font-weight: 600;
-  height: 50px;
-  width: 50px;
-  border-radius: 0;
+  height: var(--square-size);
+  width: var(--square-size);
   box-shadow: none;
+  background-color: white;
   border: 1px solid black;
-  outline: none;
   vertical-align: top;
-  padding: 0; 
+  padding: 0;
 }
 
 .square:focus {
   outline: none;
 }
 
-.game{
+.br-top-none {
+  border-top: none;
+}
+
+.br-left-none {
+  border-left: none;
+}
+
+.br-bottom-none {
+  border-bottom: none;
+}
+
+.br-right-none {
+  border-right: none;
+}
+
+.game {
   display: flex;
   width: fit-content;
   margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-ol{
+ol {
   color: white;
+}
+
+.winning-square {
+  background-color: yellow;
+}
+
+@media only screen and (max-width: 2560px) and (min-width: 1440px) {
+  :root {
+    --square-size: 200px;
+    --board-width: 700px;
+    --status-width: 700px;
+    --square-font-size: 10rem;
+    --status-font-size: 6rem;
+  }
+
+ 
+  li, li>button {
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  :root {
+    --square-size: 80px;
+    --board-width: 280px;
+    --status-width: 280px;
+    --square-font-size: 3.5rem;
+    --status-font-size: 2rem;
+  }
 }
